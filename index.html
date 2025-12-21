@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore - Backoffice Dashboard</title>
+    
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navbar supérieure -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-store me-2"></i>TechStore Dashboard
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-section="dashboard">
+                            <i class="fas fa-chart-line me-1"></i>Dashboard
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h4><i class="fas fa-laptop-code me-2"></i>TechStore</h4>
+            </div>
+            <nav class="sidebar-nav">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" data-section="dashboard">
+                            <i class="fas fa-home me-2"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-section="produits">
+                            <i class="fas fa-box me-2"></i>Produits
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-section="categories">
+                            <i class="fas fa-tags me-2"></i>Catégories
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-section="statistiques">
+                            <i class="fas fa-chart-bar me-2"></i>Statistiques & API
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Contenu principal -->
+        <main class="main-content" id="mainContent">
+            <!-- Section Dashboard -->
+            <section id="dashboard" class="content-section active">
+                <div class="container-fluid py-4">
+                    <h1 class="mb-4"><i class="fas fa-chart-line me-2"></i>Dashboard</h1>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card kpi-card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="text-muted mb-2">Total Produits</h6>
+                                            <h2 class="mb-0" id="kpi-total-produits">0</h2>
+                                        </div>
+                                        <div class="kpi-icon bg-primary">
+                                            <i class="fas fa-box"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card kpi-card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="text-muted mb-2">Stock Total</h6>
+                                            <h2 class="mb-0" id="kpi-stock-total">0</h2>
+                                        </div>
+                                        <div class="kpi-icon bg-success">
+                                            <i class="fas fa-warehouse"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card kpi-card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="text-muted mb-2">Valeur Stock</h6>
+                                            <h2 class="mb-0" id="kpi-valeur-stock">0€</h2>
+                                        </div>
+                                        <div class="kpi-icon bg-warning">
+                                            <i class="fas fa-euro-sign"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card kpi-card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="text-muted mb-2">Catégories</h6>
+                                            <h2 class="mb-0" id="kpi-total-categories">0</h2>
+                                        </div>
+                                        <div class="kpi-icon bg-info">
+                                            <i class="fas fa-tags"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Graphique des Produits par Catégorie</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="chartProduits"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section Produits (Module 1) -->
+            <section id="produits" class="content-section">
+                <div class="container-fluid py-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h1><i class="fas fa-box me-2"></i>Gestion des Produits</h1>
+                        <button class="btn btn-primary" id="btnAddProduit">
+                            <i class="fas fa-plus me-2"></i>Ajouter un Produit
+                        </button>
+                    </div>
+
+                    <!-- Formulaire d'ajout/modification -->
+                    <div class="card mb-4" id="formProduitCard" style="display: none;">
+                        <div class="card-header">
+                            <h5 class="mb-0" id="formProduitTitle">Ajouter un Produit</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="formProduit">
+                                <input type="hidden" id="produitId">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="produitNom" class="form-label">Nom du Produit *</label>
+                                        <input type="text" class="form-control" id="produitNom" required>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="produitCategorie" class="form-label">Catégorie *</label>
+                                        <select class="form-select" id="produitCategorie" required>
+                                            <option value="">Sélectionner une catégorie</option>
+                                        </select>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="produitPrix" class="form-label">Prix (€) *</label>
+                                        <input type="number" class="form-control" id="produitPrix" step="0.01" min="0" required>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="produitStock" class="form-label">Stock *</label>
+                                        <input type="number" class="form-control" id="produitStock" min="0" required>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="produitImage" class="form-label">URL Image</label>
+                                        <input type="url" class="form-control" id="produitImage" placeholder="https://...">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="produitDescription" class="form-label">Description</label>
+                                    <textarea class="form-control" id="produitDescription" rows="3"></textarea>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="fas fa-save me-2"></i>Enregistrer
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" id="btnCancelProduit">
+                                        <i class="fas fa-times me-2"></i>Annuler
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Barre de recherche et tri -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                        <input type="text" class="form-control" id="searchProduit" placeholder="Rechercher un produit...">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-sort"></i></span>
+                                        <select class="form-select" id="sortProduit">
+                                            <option value="nom-asc">Nom (A-Z)</option>
+                                            <option value="nom-desc">Nom (Z-A)</option>
+                                            <option value="prix-asc">Prix (Croissant)</option>
+                                            <option value="prix-desc">Prix (Décroissant)</option>
+                                            <option value="stock-asc">Stock (Croissant)</option>
+                                            <option value="stock-desc">Stock (Décroissant)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Liste des produits -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Liste des Produits (<span id="produitCount">0</span>)</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="produitsList" class="row">
+                                <!-- Les produits seront affichés ici -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section Catégories (Module 2) -->
+            <section id="categories" class="content-section">
+                <div class="container-fluid py-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h1><i class="fas fa-tags me-2"></i>Gestion des Catégories</h1>
+                        <button class="btn btn-primary" id="btnAddCategorie">
+                            <i class="fas fa-plus me-2"></i>Ajouter une Catégorie
+                        </button>
+                    </div>
+
+                    <!-- Formulaire d'ajout catégorie -->
+                    <div class="card mb-4" id="formCategorieCard" style="display: none;">
+                        <div class="card-header">
+                            <h5 class="mb-0">Ajouter une Catégorie</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="formCategorie">
+                                <input type="hidden" id="categorieId">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="categorieNom" class="form-label">Nom de la Catégorie *</label>
+                                        <input type="text" class="form-control" id="categorieNom" required>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="categorieDescription" class="form-label">Description</label>
+                                        <input type="text" class="form-control" id="categorieDescription">
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="fas fa-save me-2"></i>Enregistrer
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" id="btnCancelCategorie">
+                                        <i class="fas fa-times me-2"></i>Annuler
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Liste des catégories -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Liste des Catégories (<span id="categorieCount">0</span>)</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="categoriesList" class="row">
+                                <!-- Les catégories seront affichées ici -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section Statistiques & API -->
+            <section id="statistiques" class="content-section">
+                <div class="container-fluid py-4">
+                    <h1 class="mb-4"><i class="fas fa-chart-bar me-2"></i>Statistiques & API</h1>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Données de l'API FakeStore</h5>
+                                </div>
+                                <div class="card-body">
+                                    <button class="btn btn-primary" id="btnLoadAPI">
+                                        <i class="fas fa-download me-2"></i>Charger les données de l'API
+                                    </button>
+                                    <div id="apiData" class="mt-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Répartition par Catégorie</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="chartCategories"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Top 5 Produits par Prix</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="chartTopProduits"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal pour afficher les détails d'un produit -->
+    <div class="modal fade" id="modalProduitDetail" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Détails du Produit</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="modalProduitDetailBody">
+                    <!-- Contenu dynamique -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/app.js"></script>
+    <script src="js/modules/produits.js"></script>
+    <script src="js/modules/categories.js"></script>
+    <script src="js/modules/dashboard.js"></script>
+    <script src="js/utils/storage.js"></script>
+</body>
+</html>
