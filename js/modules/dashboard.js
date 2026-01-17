@@ -1,4 +1,4 @@
-// Module 3 : Dashboard & Statistiques
+//Dashboard
 class Dashboard {
     constructor() {
         this.chartProduits = null;
@@ -23,13 +23,13 @@ class Dashboard {
         const produits = storageManager.getProduits();
         const categories = storageManager.getCategories();
         
-        // Compter les produits par catégorie
+        // compter les produits par catégorie
         const dataByCategorie = {};
         categories.forEach(cat => {
             dataByCategorie[cat.nom] = produits.filter(p => p.categorieId === cat.id).length;
         });
 
-        // Produits sans catégorie
+        // produits sans catégorie
         const produitsSansCategorie = produits.filter(p => !p.categorieId || !storageManager.getCategorieById(p.categorieId)).length;
         if (produitsSansCategorie > 0) {
             dataByCategorie['Non catégorisé'] = produitsSansCategorie;
@@ -38,7 +38,7 @@ class Dashboard {
         const ctx = document.getElementById('chartProduits');
         if (!ctx) return;
 
-        // Détruire le graphique existant s'il existe
+        // Détruire
         if (this.chartProduits) {
             this.chartProduits.destroy();
         }
@@ -115,7 +115,7 @@ class Dashboard {
 
             const products = await response.json();
             
-            // Afficher les données
+            // afficher les données
             let html = '<h5 class="mb-3">Produits de l\'API FakeStore</h5>';
             html += '<div class="row">';
             
@@ -145,7 +145,6 @@ class Dashboard {
             html += '</div>';
             apiData.innerHTML = html;
 
-            // Ajouter les event listeners pour les boutons d'import
             document.querySelectorAll('.btn-import-produit').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     this.importProduitFromAPI(e.target.closest('button'));
@@ -172,7 +171,7 @@ class Dashboard {
         const image = btn.getAttribute('data-image');
         const description = btn.getAttribute('data-description');
 
-        // Trouver ou créer la catégorie
+        // trouver ou créer 
         let categories = storageManager.getCategories();
         let categorie = categories.find(c => c.nom.toLowerCase() === category.toLowerCase());
         
@@ -192,7 +191,7 @@ class Dashboard {
             }
         }
 
-        // Créer le produit
+        // créer le produit
         const produit = storageManager.addProduit({
             nom: title,
             categorieId: categorie.id,
@@ -243,7 +242,7 @@ class Dashboard {
 // Initialiser le dashboard
 document.addEventListener('DOMContentLoaded', () => {
     window.Dashboard = new Dashboard();
-    // Mettre à jour le graphique après un court délai pour s'assurer que Chart.js est chargé
+    // Mettre à jour
     setTimeout(() => {
         Dashboard.updateChart();
     }, 100);

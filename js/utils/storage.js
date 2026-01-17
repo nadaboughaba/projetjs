@@ -1,4 +1,4 @@
-// Gestion du LocalStorage
+//LocalStorage
 class StorageManager {
     constructor() {
         this.produitsKey = 'techstore_produits';
@@ -112,6 +112,5 @@ class StorageManager {
     }
 }
 
-// Instance globale
 window.storageManager = new StorageManager();
 

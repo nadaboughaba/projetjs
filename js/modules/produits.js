@@ -1,4 +1,4 @@
-// Module 1 : Gestion des Produits (CRUD complet)
+// gestion des produit
 class ProduitsManager {
     constructor() {
         this.currentProduit = null;
@@ -12,17 +12,17 @@ class ProduitsManager {
     }
 
     setupEventListeners() {
-        // Bouton ajouter produit
+        // ajouter produit
         document.getElementById('btnAddProduit').addEventListener('click', () => {
             this.showForm();
         });
 
-        // Bouton annuler
+        // annuler
         document.getElementById('btnCancelProduit').addEventListener('click', () => {
             this.hideForm();
         });
 
-        // Soumission du formulaire
+        // soumission
         document.getElementById('formProduit').addEventListener('submit', (e) => {
             e.preventDefault();
             this.saveProduit();
@@ -58,7 +58,7 @@ class ProduitsManager {
         const form = document.getElementById('formProduit');
 
         if (produit) {
-            // Mode édition
+            // Mode edit
             this.currentProduit = produit;
             formTitle.textContent = 'Modifier le Produit';
             document.getElementById('produitId').value = produit.id;
@@ -100,14 +100,14 @@ class ProduitsManager {
             }
         });
 
-        // Validation du prix
+        // vcalidation prix
         const prix = parseFloat(document.getElementById('produitPrix').value);
         if (isNaN(prix) || prix < 0) {
             document.getElementById('produitPrix').classList.add('is-invalid');
             isValid = false;
         }
 
-        // Validation du stock
+        // validation stock
         const stock = parseInt(document.getElementById('produitStock').value);
         if (isNaN(stock) || stock < 0) {
             document.getElementById('produitStock').classList.add('is-invalid');
@@ -132,11 +132,11 @@ class ProduitsManager {
         };
 
         if (this.currentProduit) {
-            // Mise à jour
+            // mise à jour
             storageManager.updateProduit(this.currentProduit.id, produitData);
             this.showAlert('Produit modifié avec succès!', 'success');
         } else {
-            // Ajout
+            // ajout
             storageManager.addProduit(produitData);
             this.showAlert('Produit ajouté avec succès!', 'success');
         }
@@ -144,7 +144,7 @@ class ProduitsManager {
         this.hideForm();
         this.displayProduits();
         
-        // Mettre à jour le dashboard si visible
+        // mettre à jour dashboard
         if (typeof Dashboard !== 'undefined') {
             Dashboard.updateKPIs();
         }

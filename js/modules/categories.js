@@ -1,4 +1,4 @@
-// Module 2 : Gestion des Catégories (CRUD simplifié)
+//Gestion des Catégories
 class CategoriesManager {
     constructor() {
         this.init();
@@ -20,7 +20,7 @@ class CategoriesManager {
             this.hideForm();
         });
 
-        // Soumission du formulaire
+        // Soumission 
         document.getElementById('formCategorie').addEventListener('submit', (e) => {
             e.preventDefault();
             this.saveCategorie();
@@ -58,7 +58,7 @@ class CategoriesManager {
         this.hideForm();
         this.displayCategories();
         
-        // Recharger les catégories dans le formulaire produits
+        // Recharger les catégories dans produit
         if (typeof ProduitsManager !== 'undefined') {
             ProduitsManager.loadCategories();
         }
@@ -83,12 +83,11 @@ class CategoriesManager {
 
         container.innerHTML = categories.map(categorie => this.createCategorieCard(categorie)).join('');
         
-        // Ajouter les event listeners pour les boutons de suppression
         this.attachCategorieEventListeners();
     }
 
     createCategorieCard(categorie) {
-        // Compter les produits dans cette catégorie
+        // Compter les produits
         const produits = storageManager.getProduits();
         const produitCount = produits.filter(p => p.categorieId === categorie.id).length;
 
@@ -127,7 +126,7 @@ class CategoriesManager {
         const categorie = storageManager.getCategorieById(id);
         if (!categorie) return;
 
-        // Vérifier si des produits utilisent cette catégorie
+        // Vérification es produit
         const produits = storageManager.getProduits();
         const produitsUsingCategorie = produits.filter(p => p.categorieId === id);
 
@@ -140,8 +139,7 @@ class CategoriesManager {
             if (storageManager.deleteCategorie(id)) {
                 this.showAlert('Catégorie supprimée avec succès!', 'success');
                 this.displayCategories();
-                
-                // Recharger les catégories dans le formulaire produits
+
                 if (typeof ProduitsManager !== 'undefined') {
                     ProduitsManager.loadCategories();
                 }
@@ -173,7 +171,7 @@ class CategoriesManager {
     }
 }
 
-// Initialiser le gestionnaire de catégories
+// Initialisation
 document.addEventListener('DOMContentLoaded', () => {
     window.CategoriesManager = new CategoriesManager();
 });
