@@ -19,7 +19,7 @@ class StorageManager {
         }
     }
 
-    // Gestion des produits
+    // Gestion produits
     getProduits() {
         const produits = localStorage.getItem(this.produitsKey);
         return produits ? JSON.parse(produits) : [];
@@ -62,7 +62,7 @@ class StorageManager {
         return produits.find(p => p.id === id);
     }
 
-    // Gestion des catégories
+    // Gestion catégories
     getCategories() {
         const categories = localStorage.getItem(this.categoriesKey);
         return categories ? JSON.parse(categories) : [];
